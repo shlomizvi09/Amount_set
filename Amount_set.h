@@ -264,3 +264,4 @@ ASElement asGetNext(AmountSet set);
         iterator = asGetNext(set))
 
 #endif /* AMOUNT_SET_H_ */
+
