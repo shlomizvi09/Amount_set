@@ -4,6 +4,7 @@
 
 typedef struct node_t {
   ASElement element;
+  double amount;
   struct node_t *next;
 } *Node;
 
@@ -34,7 +35,20 @@ AmountSet asCreate(CopyASElement copyElement,
   }
   new_set->head->next = NULL;
   new_set->head->element = NULL;
+  new_set->head->amount = 0;
   return new_set;
+}
+void asDestroy(AmountSet set) {
+  if (!set) {
+    return;
+  }
+  Node temp_ptr = set->head;
+  Node temp_ptr2;
+  while (temp_ptr) {
+    temp_ptr2 = temp_ptr;
+    free(temp_ptr);
+    temp_ptr = temp_ptr2->next;
+  }
 }
 
 AmountSetResult asRegister(AmountSet set, ASElement element) {
@@ -47,19 +61,17 @@ AmountSetResult asRegister(AmountSet set, ASElement element) {
   }
 }
 
-bool asContains(AmountSet set, ASElement element){
-    if(set==NULL || element==NULL||set->head==NULL){
-        return false;
+bool asContains(AmountSet set, ASElement element) {
+  if (set == NULL || element == NULL || set->head == NULL) {
+    return false;
+  }
+  for (Node node_ptr = set->head; node_ptr != NULL; node_ptr = node_ptr->next) {
+    if (node_ptr->element == NULL) {
+      return false;
     }
-    for(Node node_ptr=set->head;node_ptr==NULL;node_ptr=node_ptr->next){
-        if(node_ptr==NULL||node_ptr->element==NULL){
-            return false;
-        }
-        if ((CompareASElements (elemnt,node_ptr->element))==0){
-            return true;
-        }
+    if (set->as_compare(element, node_ptr->element) == 0) {
+      return true;
     }
-
-
+  }
 
 }
