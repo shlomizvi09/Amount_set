@@ -45,9 +45,9 @@ void asDestroy(AmountSet set) {
   Node temp_ptr = set->head;
   Node temp_ptr2;
   while (temp_ptr) {
-    temp_ptr2 = temp_ptr;
+    temp_ptr2 = temp_ptr->next;
     free(temp_ptr);
-    temp_ptr = temp_ptr2->next;
+    temp_ptr = temp_ptr2;
   }
 }
 
