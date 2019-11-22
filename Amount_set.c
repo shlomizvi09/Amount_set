@@ -46,3 +46,20 @@ AmountSetResult asRegister(AmountSet set, ASElement element) {
 
   }
 }
+
+bool asContains(AmountSet set, ASElement element){
+    if(set==NULL || element==NULL||set->head==NULL){
+        return false;
+    }
+    for(Node node_ptr=set->head;node_ptr==NULL;node_ptr=node_ptr->next){
+        if(node_ptr==NULL||node_ptr->element==NULL){
+            return false;
+        }
+        if ((CompareASElements (elemnt,node_ptr->element))==0){
+            return true;
+        }
+    }
+
+
+
+}
