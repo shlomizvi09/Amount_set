@@ -12,7 +12,7 @@ typedef struct AmountSet_t {
   FreeASElement as_free;
   CompareASElements as_compare;
   Node head;
-};
+} *AmountSet;
 
 AmountSet asCreate(CopyASElement copyElement,
                    FreeASElement freeElement,
@@ -42,7 +42,7 @@ AmountSetResult asRegister(AmountSet set, ASElement element) {
     return AS_NULL_ARGUMENT;
   }
   Node iterator = set->head->next;
-  for(;iterator!=NULL;iterator = iterator->next){
+  for (; iterator != NULL; iterator = iterator->next) {
 
   }
 }
