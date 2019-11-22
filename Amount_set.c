@@ -1,7 +1,7 @@
 
 #include "Amount_set.h"
 #include <stdlib.h>
-
+#include <assert.h>
 typedef struct node_t {
   ASElement element;
   double amount;
@@ -65,7 +65,8 @@ bool asContains(AmountSet set, ASElement element) {
   if (set == NULL || element == NULL || set->head == NULL) {
     return false;
   }
-  for (Node node_ptr = set->head; node_ptr != NULL; node_ptr = node_ptr->next) {
+  Node node_ptr
+  for (node_ptr = set->head; node_ptr != NULL; node_ptr = node_ptr->next) {
     if (node_ptr->element == NULL) {
       return false;
     }
@@ -73,5 +74,5 @@ bool asContains(AmountSet set, ASElement element) {
       return true;
     }
   }
-
+  assert(node_ptr);
 }

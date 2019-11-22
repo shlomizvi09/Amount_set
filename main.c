@@ -4,6 +4,7 @@
 
 int main() {
 
+    printf("Ya kaka");
 
-  return 0;
+    return 0;
 }
