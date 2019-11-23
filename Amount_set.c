@@ -1,4 +1,3 @@
-
 #include "Amount_set.h"
 #include <stdlib.h>
 #include <assert.h>
@@ -13,6 +12,7 @@ typedef struct AmountSet_t {
   FreeASElement as_free;
   CompareASElements as_compare;
   Node head;
+  Node iterator;
 } *AmountSet;
 
 AmountSet asCreate(CopyASElement copyElement,
@@ -39,30 +39,24 @@ AmountSet asCreate(CopyASElement copyElement,
   return new_set;
 }
 void asDestroy(AmountSet set) {
-  if (!set) {
+  if (set == NULL) {
     return;
   }
   Node temp_ptr = set->head;
   Node temp_ptr2;
   while (temp_ptr) {
     temp_ptr2 = temp_ptr->next;
+    if ((set->head->element) != NULL) {
+      free(set->head->element);
+    }
     free(temp_ptr);
     temp_ptr = temp_ptr2;
   }
+  free(set);
 }
 
-AmountSetResult asRegister(AmountSet set, ASElement element) {
-  if ((set == NULL) || (element == NULL)) {
-    return AS_NULL_ARGUMENT;
-  }
-  Node iterator = set->head->next;
-  for (; iterator != NULL; iterator = iterator->next) {
-
-  }
-}
-
-bool asContains(AmountSet set, ASElement element) {
-  if (set == NULL || element == NULL || set->head == NULL) {
+/*bool asContains(AmountSet set, ASElement element) {
+  if (set == NULL || set->head == NULL || element == NULL) {
     return false;
   }
   Node node_ptr
@@ -75,4 +69,14 @@ bool asContains(AmountSet set, ASElement element) {
     }
   }
   assert(node_ptr);
-}
+}*/
+
+/*AmountSetResult asRegister(AmountSet set, ASElement element) {
+  if ((set == NULL) || (element == NULL)) {
+    return AS_NULL_ARGUMENT;
+  }
+  Node iterator = set->head->next;
+  for (; iterator != NULL; iterator = iterator->next) {
+
+  }
+}*/

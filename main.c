@@ -2,9 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
 int main() {
-
-    printf("Ya kaka");
-
-    return 0;
+  return 0;
 }
