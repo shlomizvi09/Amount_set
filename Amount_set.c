@@ -51,9 +51,7 @@ void asDestroy(AmountSet set) {
     Node temp_ptr2;
     while (temp_ptr) {
         temp_ptr2 = temp_ptr->next;
-        if ((set->head->element) != NULL) {
-            free(set->head->element);
-        }
+        free(set->head->element); //TODO: free on NULL is OK ?
         free(temp_ptr);
         temp_ptr = temp_ptr2;
     }
@@ -112,6 +110,23 @@ static Node getElement(AmountSet set, ASElement element) {
         node_ptr = node_ptr->next;
     }
     return NULL;
+}
+
+AmountSet asCopy(AmountSet set) {
+    if (set == NULL) {
+        return NULL;
+    }
+    AmountSet new_set = asCreate(set->as_copy, set->as_free, set->as_compare);
+    if (new_set == NULL) {
+        return NULL;
+    }
+    Node node_ptr_copy_from = set->head->next;
+    while (node_ptr_copy_from != NULL) {
+        AmountSetResult result = asRegister(new_set, node_ptr_copy_from->element);
+        if (result == AS_NULL_ARGUMENT) {
+            return NULL; // if element is NULL it's an error? list is over ?
+        }
+    }
 }
 /*AmountSetResult asChangeAmount(AmountSet set, ASElement element, const double
 amount){
