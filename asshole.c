@@ -16,3 +16,6 @@ typedef struct AmountSet_t {
   Node head;
   Node iterator;
 } *AmountSet;
+
+int asGetSize(AmountSet set);
+
