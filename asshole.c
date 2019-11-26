@@ -20,15 +20,4 @@ typedef struct AmountSet_t {
 
 static Node getElementNodePtr(AmountSet set, ASElement element);
 
-int asGetSize(AmountSet set);
-
-void myFisBetter(){
-
-}
-int AnothernewF(int num) {
-  printf("%d", num);
-}
-
-int newFunction(){
-  return 12;
-}
+// I deleted all of your functions
