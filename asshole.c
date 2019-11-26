@@ -30,5 +30,5 @@ int AnothernewF(int num) {
 }
 
 int newFunction(){
-  return 12;
+  printf(" ");
 }
