@@ -22,7 +22,9 @@ static Node getElementNodePtr(AmountSet set, ASElement element);
 
 int asGetSize(AmountSet set);
 
+void myFisBetter(){
 
+}
 
 int newFunction(){
   return 12;
