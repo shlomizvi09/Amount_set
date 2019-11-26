@@ -16,3 +16,5 @@ typedef struct AmountSet_t {
   Node head;
   Node iterator;
 } *AmountSet;
+
+static Node getElementNodePtr(AmountSet set, ASElement element);
