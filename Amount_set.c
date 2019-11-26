@@ -133,11 +133,8 @@ AmountSet asCopy(AmountSet set) {
     node_ptr_copy_from = node_ptr_copy_from->next;
   }
 }
-/*AmountSetResult asChangeAmount(AmountSet set, ASElement element, const double
-amount){
-    assert(set);
-    assert(element);
-    Node*/
+AmountSetResult asChangeAmount(AmountSet set, ASElement element, const double
+amount);
 
 
 
