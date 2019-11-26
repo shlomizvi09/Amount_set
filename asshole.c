@@ -16,7 +16,3 @@ typedef struct AmountSet_t {
   Node head;
   Node iterator;
 } *AmountSet;
-
-AmountSetResult asClear(AmountSet set);
-
-
