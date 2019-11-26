@@ -22,8 +22,10 @@ static Node getElementNodePtr(AmountSet set, ASElement element);
 
 int asGetSize(AmountSet set);
 
+int AnothernewF(int num) {
+  printf("%d", num);
+}
 
-
-int newFunction(){
+int newFunction() {
   return 12;
 }
