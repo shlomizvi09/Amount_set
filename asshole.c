@@ -1,3 +1,4 @@
+#include "Amount_set.h"
 #include <stdlib.h>
 #include <assert.h>
 
@@ -21,3 +22,7 @@ static Node getElementNodePtr(AmountSet set, ASElement element);
 
 int asGetSize(AmountSet set);
 
+
+
+
+int getNumber(int a);
