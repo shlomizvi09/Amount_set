@@ -134,4 +134,16 @@ AmountSet asCopy(AmountSet set) {
   }
 }
 
-AmountSetResult asRegister(AmountSet set, ASElement element);
+AmountSetResult asRegister(AmountSet set, ASElement element) {
+  if (set == NULL || element == NULL) {
+    return AS_NULL_ARGUMENT;
+  }
+  if (asContains(set, element)) {
+    return AS_ITEM_ALREADY_EXISTS;
+  }
+  Node node_ptr = set->head->next;
+  while (node_ptr != NULL) {
+    // TODO : maybe a function to find where to put the item ? using as_compare
+    node_ptr = node_ptr->next;
+  }
+}
