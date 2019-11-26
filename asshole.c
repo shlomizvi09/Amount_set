@@ -25,6 +25,9 @@ int asGetSize(AmountSet set);
 void myFisBetter(){
 
 }
+int AnothernewF(int num) {
+  printf("%d", num);
+}
 
 int newFunction(){
   return 12;
