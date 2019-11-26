@@ -26,7 +26,8 @@ void myFisBetter(){
 
 }
 int AnothernewF(int num) {
-  printf("14");
+    if (num==1)
+        return 0;
 }
 
 int newFunction(){
