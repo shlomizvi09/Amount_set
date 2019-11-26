@@ -22,7 +22,6 @@ static Node getElementNodePtr(AmountSet set, ASElement element);
 
 int asGetSize(AmountSet set);
 
-
-
-
-int getNumber(int a);
+int getNumber(int a) {
+  printf("lalala");
+}
