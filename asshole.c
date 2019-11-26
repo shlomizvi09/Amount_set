@@ -22,13 +22,13 @@ static Node getElementNodePtr(AmountSet set, ASElement element);
 
 int asGetSize(AmountSet set);
 
-void myFisBetter(){
+void myFisBetter() {
 
 }
 int AnothernewF(int num) {
   printf("14");
 }
 
-int newFunction(){
-  printf(" ");
+int newFunction() {
+  printf("Arik berenstein");
 }
