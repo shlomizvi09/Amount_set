@@ -133,22 +133,5 @@ AmountSet asCopy(AmountSet set) {
     node_ptr_copy_from = node_ptr_copy_from->next;
   }
 }
-AmountSetResult asChangeAmount(AmountSet set, ASElement element, const double
-amount);
 
-
-
-
-}
-
-
-
-/*AmountSetResult asRegister(AmountSet set, ASElement element) {
-  if ((set == NULL) || (element == NULL)) {
-    return AS_NULL_ARGUMENT;
-  }
-  Node iterator = set->head->next;
-  for (; iterator != NULL; iterator = iterator->next) {
-
-  }
-}*/
+AmountSetResult asRegister(AmountSet set, ASElement element);
