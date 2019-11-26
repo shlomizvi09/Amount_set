@@ -19,4 +19,5 @@ typedef struct AmountSet_t {
 
 static Node getElementNodePtr(AmountSet set, ASElement element);
 
-AmountSetResult asClear(AmountSet set);
+int asGetSize(AmountSet set);
+
