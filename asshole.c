@@ -25,4 +25,6 @@ int asGetSize(AmountSet set);
 
 
 
-int getNumber(int a);
+int getNumber(int a){
+    printf("blalala");
+}
