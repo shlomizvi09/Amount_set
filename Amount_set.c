@@ -82,7 +82,8 @@ bool asContains(AmountSet set, ASElement element) {
     return false;
   }
   Node node_ptr;
-  for (node_ptr = set->head->next; node_ptr != NULL; node_ptr = node_ptr->next) {
+  for (node_ptr = set->head->next; node_ptr != NULL;
+       node_ptr = node_ptr->next) {
     if (node_ptr->element == NULL) {
       return false;
     }
@@ -146,17 +147,54 @@ AmountSetResult asRegister(AmountSet set, ASElement element) {
   Node node_before = set->head;
   Node node_after = set->head->next;
   while (node_after != NULL) {
-    if (set->as_compare(element, node_after->element) < 0){
-      node_before->next=
+    if (set->as_compare(element, node_after->element) < 0) {
+      break;
+      /*loop runs until it reaches a bigger element (by as_compare)
+       * or the end of the list (NULL) */
     }
+    node_before = node_after;
+    node_after = node_after->next;
   }
+  Node new_node = malloc(sizeof(*new_node));
+  if (new_node == NULL) {
+    return AS_OUT_OF_MEMORY;
+  }
+  new_node->element = set->as_copy(element);
+  new_node->amount = 0;
+  new_node->next = node_after;
+  node_before->next = new_node;
+  return AS_SUCCESS;
+}
+AmountSetResult asDelete(AmountSet set, ASElement element) {
+  if (set == NULL || element == NULL) {
+    return AS_NULL_ARGUMENT;
+  }
+  AmountSetResult result = asContains(set, element);
+  if (!result) {
+    return AS_ITEM_DOES_NOT_EXIST;
+  }
+  Node node_before = set->head;
+  Node node_to_delete = set->head->next;
+  while (node_to_delete != NULL) {
+    if (set->as_compare(element, node_to_delete->element) == 0) {
+      break;
+    }
+    node_to_delete = node_to_delete->next;
+    node_before = node_to_delete;
+
+  }
+  assert(node_to_delete != NULL); // because element is in the list
+  set->as_free(node_to_delete->element);
+  node_before->next = node_to_delete->next;
+  free(node_to_delete);
+
 }
 
 AmountSetResult asChangeAmount(AmountSet set, ASElement element, const double
-amount){
-    assert(set && element);
-    if (asContains(element)==false){
-        return AS_ITEM_DOES_NOT_EXIST;
-    }
+amount) {
+  assert(set && element);
+  if (asContains(element) == false) {
+    return AS_ITEM_DOES_NOT_EXIST;
+  }
 
 }
