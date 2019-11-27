@@ -14,7 +14,19 @@ typedef struct AmountSet_t {
   Node head;
   Node iterator;
 } *AmountSet;
-static Node findElementSpot(AmountSet set,ASElement element);
+static Node findElementSpot(AmountSet set, ASElement element,
+                            Node node_before, Node node_after) {
+  if (set == NULL || element == NULL) {
+    return NULL;
+  }
+  Node curr_ptr = set->head->next;
+  Node prev_ptr = set->head;
+  while (curr_ptr != NULL) {
+    if (set->as_compare(element, curr_ptr->element) < 0) {
+
+    }
+  }
+}
 static Node getElementNodePtr(AmountSet set, ASElement element) {
   if (set == NULL || element == NULL) {
     return NULL;
@@ -131,9 +143,11 @@ AmountSetResult asRegister(AmountSet set, ASElement element) {
   if (asContains(set, element)) {
     return AS_ITEM_ALREADY_EXISTS;
   }
-  Node node_ptr = set->head->next;
-  while (node_ptr != NULL) {
-    // TODO : maybe a function to find where to put the item ? using as_compare
-    node_ptr = node_ptr->next;
+  Node node_before = set->head;
+  Node node_after = set->head->next;
+  while (node_after != NULL) {
+    if (set->as_compare(element, node_after->element) < 0){
+      node_before->next=
+    }
   }
 }
