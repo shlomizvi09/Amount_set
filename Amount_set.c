@@ -7,9 +7,6 @@ typedef struct node_t {
   double amount;
   struct node_t *next;
 } *Node;
-
-static Node getElementNodePtr(AmountSet set, ASElement element);
-
 typedef struct AmountSet_t {
   CopyASElement as_copy;
   FreeASElement as_free;
@@ -17,7 +14,20 @@ typedef struct AmountSet_t {
   Node head;
   Node iterator;
 } *AmountSet;
-
+static Node findElementSpot(AmountSet set,ASElement element);
+static Node getElementNodePtr(AmountSet set, ASElement element) {
+  if (set == NULL || element == NULL) {
+    return NULL;
+  }
+  Node node_ptr = set->head;
+  while (node_ptr != NULL) {
+    if (set->as_compare(node_ptr->element, element) == 0) {
+      return node_ptr;
+    }
+    node_ptr = node_ptr->next;
+  }
+  return NULL;
+}
 AmountSet asCreate(CopyASElement copyElement,
                    FreeASElement freeElement,
                    CompareASElements compareElements) {
@@ -41,7 +51,6 @@ AmountSet asCreate(CopyASElement copyElement,
   new_set->head->amount = 0;
   return new_set;
 }
-
 void asDestroy(AmountSet set) {
   if (set == NULL) {
     return;
@@ -50,13 +59,12 @@ void asDestroy(AmountSet set) {
   Node temp_ptr2;
   while (temp_ptr) {
     temp_ptr2 = temp_ptr->next;
-    free(set->head->element); //TODO: free on NULL is OK ?
+    free(set->head->element);
     free(temp_ptr);
     temp_ptr = temp_ptr2;
   }
   free(set);
 }
-
 bool asContains(AmountSet set, ASElement element) {
   if (set == NULL || set->head == NULL || element == NULL) {
     return false;
@@ -72,7 +80,6 @@ bool asContains(AmountSet set, ASElement element) {
   }
   assert(node_ptr);
 }
-
 int asGetSize(AmountSet set) {
   assert(set);
   int size = 0;
@@ -83,7 +90,6 @@ int asGetSize(AmountSet set) {
   }
   return size;
 }
-
 AmountSetResult asGetAmount(AmountSet set, ASElement element, double
 *outAmount) {
   Node node_ptr;
@@ -97,21 +103,6 @@ AmountSetResult asGetAmount(AmountSet set, ASElement element, double
   *outAmount = node_ptr->amount;
   return AS_SUCCESS;
 }
-
-static Node getElementNodePtr(AmountSet set, ASElement element) {
-  if (set == NULL || element == NULL) {
-    return NULL;
-  }
-  Node node_ptr = set->head;
-  while (node_ptr != NULL) {
-    if (set->as_compare(node_ptr->element, element) == 0) {
-      return node_ptr;
-    }
-    node_ptr = node_ptr->next;
-  }
-  return NULL;
-}
-
 AmountSet asCopy(AmountSet set) {
   if (set == NULL) {
     return NULL;
@@ -133,7 +124,6 @@ AmountSet asCopy(AmountSet set) {
     node_ptr_copy_from = node_ptr_copy_from->next;
   }
 }
-
 AmountSetResult asRegister(AmountSet set, ASElement element) {
   if (set == NULL || element == NULL) {
     return AS_NULL_ARGUMENT;
