@@ -120,7 +120,9 @@ AmountSetResult asGetAmount(AmountSet set, ASElement element, double
         return AS_ITEM_DOES_NOT_EXIST;
     }
     node_ptr = getElementNodePtr(set, element);
-    *outAmount = node_ptr->amount;
+    double tmp_amount=0;
+    tmp_amount=node_ptr->amount;
+    *outAmount = tmp_amount;
     return AS_SUCCESS;
 }
 
@@ -203,10 +205,10 @@ AmountSetResult asDelete(AmountSet set, ASElement element) {
 AmountSetResult asChangeAmount(AmountSet set, ASElement element, const double
 amount) {
     assert(set && element);
-    if (asContains(element) == false) {
+    if (asContains(set,element) == false) {
         return AS_ITEM_DOES_NOT_EXIST;
     }
-    Node node_of_element = getElementNodePtr(element);
+    Node node_of_element = getElementNodePtr(set,element);
     if (node_of_element->amount + amount < 0) {
         return AS_INSUFFICIENT_AMOUNT;
     } else {

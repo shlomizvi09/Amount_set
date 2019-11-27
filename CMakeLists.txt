@@ -3,4 +3,4 @@ project(Amount_set C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Amount_set main.c Amount_set.c Amount_set.h asshole.c)
+add_executable(Amount_set main.c Amount_set.c Amount_set.h)
