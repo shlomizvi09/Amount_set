@@ -31,7 +31,7 @@ static Node getElementNodePtr(AmountSet set, ASElement element) {
   if (set == NULL || element == NULL) {
     return NULL;
   }
-  Node node_ptr = set->head;
+  Node node_ptr = set->head->next;
   while (node_ptr != NULL) {
     if (set->as_compare(node_ptr->element, element) == 0) {
       return node_ptr;
@@ -82,7 +82,7 @@ bool asContains(AmountSet set, ASElement element) {
     return false;
   }
   Node node_ptr;
-  for (node_ptr = set->head; node_ptr != NULL; node_ptr = node_ptr->next) {
+  for (node_ptr = set->head->next; node_ptr != NULL; node_ptr = node_ptr->next) {
     if (node_ptr->element == NULL) {
       return false;
     }
@@ -95,7 +95,7 @@ bool asContains(AmountSet set, ASElement element) {
 int asGetSize(AmountSet set) {
   assert(set);
   int size = 0;
-  set->iterator = set->head;
+  set->iterator = set->head->next;
   while (set->iterator) {
     set->iterator = set->iterator->next;
     size++;
@@ -150,4 +150,13 @@ AmountSetResult asRegister(AmountSet set, ASElement element) {
       node_before->next=
     }
   }
+}
+
+AmountSetResult asChangeAmount(AmountSet set, ASElement element, const double
+amount){
+    assert(set && element);
+    if (asContains(element)==false){
+        return AS_ITEM_DOES_NOT_EXIST;
+    }
+
 }
