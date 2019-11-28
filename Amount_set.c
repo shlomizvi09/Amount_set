@@ -58,13 +58,14 @@ void asDestroy(AmountSet set) {
     return;
   }
   Node temp_ptr = set->head;
-  Node temp_ptr2;
-  while (temp_ptr) {
-    temp_ptr2 = temp_ptr->next;
-    free(set->head->element);
-    free(temp_ptr);
+  Node temp_ptr2 = temp_ptr->next;
+  while (temp_ptr2) {
+    set->as_free(temp_ptr2->element);
+    temp_ptr2 = temp_ptr2->next;
     temp_ptr = temp_ptr2;
+    free(temp_ptr);
   }
+  free(set->head);
   free(set);
 }
 
@@ -82,15 +83,18 @@ bool asContains(AmountSet set, ASElement element) {
       return true;
     }
   }
-  assert(node_ptr);
+  return false;
+  /*assert(node_ptr);*/
 }
 
 int asGetSize(AmountSet set) {
-  assert(set);
+  if (set == NULL) {
+    return -1;
+  }
   int size = 0;
-  set->iterator = set->head->next;
-  while (set->iterator) {
-    set->iterator = set->iterator->next;
+  Node node_ptr = set->head->next;
+  while (node_ptr != NULL) {
+    node_ptr = node_ptr->next;
     size++;
   }
   return size;
@@ -180,15 +184,14 @@ AmountSetResult asDelete(AmountSet set, ASElement element) {
     if (set->as_compare(element, node_to_delete->element) == 0) {
       break;
     }
-    node_to_delete = node_to_delete->next;
     node_before = node_to_delete;
-
+    node_to_delete = node_to_delete->next;
   }
   assert(node_to_delete != NULL); // because element is in the list
   set->as_free(node_to_delete->element);
   node_before->next = node_to_delete->next;
   free(node_to_delete);
-
+  return AS_SUCCESS;
 }
 
 AmountSetResult asClear(AmountSet set) {
@@ -207,27 +210,29 @@ AmountSetResult asClear(AmountSet set) {
 
 AmountSetResult asChangeAmount(AmountSet set, ASElement element, const double
 amount) {
-  assert(set && element);
+  if (set == NULL || element == NULL) {
+    return AS_NULL_ARGUMENT;
+  }
   if (asContains(set, element) == false) {
     return AS_ITEM_DOES_NOT_EXIST;
   }
   Node node_of_element = getElementNodePtr(set, element);
+  assert(node_of_element != NULL);
   if (node_of_element->amount + amount < 0) {
     return AS_INSUFFICIENT_AMOUNT;
-  } else {
-    node_of_element->amount = node_of_element->amount + amount;
-    return AS_SUCCESS;
   }
+  node_of_element->amount = node_of_element->amount + amount;
+  return AS_SUCCESS;
 }
 
 ASElement asGetFirst(AmountSet set) {
   assert(set && set->head->next);
   set->iterator = set->head->next;
-  return set->iterator;
+  return set->iterator->element;
 }
 
 ASElement asGetNext(AmountSet set) {
   assert(set && set->head->next);
   set->iterator = set->iterator->next;
-  return set->iterator;
+  return set->iterator->element;
 }
