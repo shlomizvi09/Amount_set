@@ -58,9 +58,12 @@ void asDestroy(AmountSet set) {
     return;
   }
   Node temp_ptr = set->head;
-  Node temp_ptr2 = temp_ptr->next;
-  while (temp_ptr2) {
-    set->as_free(temp_ptr2->element);
+  Node temp_ptr2 = set->head->next;
+  while (temp_ptr2 != NULL) {
+    assert(temp_ptr2 != set->head);
+    if (temp_ptr2 != NULL) {
+      set->as_free(temp_ptr2->element);
+    }
     temp_ptr2 = temp_ptr2->next;
     temp_ptr = temp_ptr2;
     free(temp_ptr);
@@ -140,6 +143,10 @@ AmountSet asCopy(AmountSet set) {
     node_ptr_copy_to->amount = node_ptr_copy_from->amount;
     node_ptr_copy_from = node_ptr_copy_from->next;
   }
+  Node ptr_to_first_element =
+      getElementNodePtr(new_set, set->head->next->element);
+  new_set->head->next = ptr_to_first_element;
+  return new_set;
 }
 
 AmountSetResult asRegister(AmountSet set, ASElement element) {
@@ -166,7 +173,7 @@ AmountSetResult asRegister(AmountSet set, ASElement element) {
   }
   new_node->element = set->as_copy(element);
   new_node->amount = 0;
-  new_node->next = node_after;
+  new_node->next = node_after != NULL ? node_after : NULL;
   node_before->next = new_node;
   return AS_SUCCESS;
 }
@@ -202,7 +209,7 @@ AmountSetResult asClear(AmountSet set) {
   while (node_ptr != NULL) {
     Node curr_node = node_ptr;
     set->as_free(curr_node->element);
-    node_ptr = curr_node->next;
+    node_ptr = node_ptr->next;
     free(curr_node);
   }
   return AS_SUCCESS;
