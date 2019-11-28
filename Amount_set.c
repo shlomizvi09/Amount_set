@@ -1,4 +1,4 @@
-#include "Amount_set.h"
+#include "amount_set.h"
 #include <stdlib.h>
 #include <assert.h>
 
@@ -7,13 +7,13 @@ typedef struct node_t {
   double amount;
   struct node_t *next;
 } *Node;
-typedef struct AmountSet_t {
+struct AmountSet_t {
   CopyASElement as_copy;
   FreeASElement as_free;
   CompareASElements as_compare;
   Node head;
   Node iterator;
-} *AmountSet;
+} ;
 
 static Node getElementNodePtr(AmountSet set, ASElement element) {
   if (set == NULL || element == NULL) {
@@ -246,5 +246,8 @@ ASElement asGetNext(AmountSet set) {
     return NULL;
   }
   set->iterator = set->iterator->next;
+  if (set->iterator == NULL) {
+    return NULL;
+  }
   return set->iterator->element;
 }
