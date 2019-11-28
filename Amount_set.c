@@ -64,8 +64,8 @@ void asDestroy(AmountSet set) {
     if (temp_ptr2 != NULL) {
       set->as_free(temp_ptr2->element);
     }
-    temp_ptr2 = temp_ptr2->next;
     temp_ptr = temp_ptr2;
+    temp_ptr2 = temp_ptr2->next;
     free(temp_ptr);
   }
   free(set->head);
@@ -212,6 +212,7 @@ AmountSetResult asClear(AmountSet set) {
     node_ptr = node_ptr->next;
     free(curr_node);
   }
+  set->head->next = NULL;
   return AS_SUCCESS;
 }
 
@@ -233,13 +234,17 @@ amount) {
 }
 
 ASElement asGetFirst(AmountSet set) {
-  assert(set && set->head->next);
+  if (set == NULL || set->head->next == NULL) {
+    return NULL;
+  }
   set->iterator = set->head->next;
   return set->iterator->element;
 }
 
 ASElement asGetNext(AmountSet set) {
-  assert(set && set->head->next);
+  if (set == NULL || set->head->next == NULL) {
+    return NULL;
+  }
   set->iterator = set->iterator->next;
   return set->iterator->element;
 }
